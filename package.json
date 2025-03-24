@@ -1,6 +1,6 @@
 {
   "name": "@cozka/utils-object",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "object"
   ],
@@ -20,9 +20,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@cozka/utils-array": "^0.1.0",
+    "@cozka/utils-array": "^0.1.1",
     "@cozka/utils-lang": "^0.1.0",
-    "@cozka/utils-string": "^0.1.0",
+    "@cozka/utils-string": "^0.1.1",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

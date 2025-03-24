@@ -1343,12 +1343,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cozka/utils-array@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@cozka/utils-array@npm:0.1.0"
+"@cozka/utils-array@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@cozka/utils-array@npm:0.1.1"
   dependencies:
     lodash-es: "npm:^4.17.21"
-  checksum: 10c0/74319818fd424d196085b81cb59ca6332e639f8538f643cc29942f4e2a5436d432ea47420ca20e8a7d70fdf6ed9cfd927396e8953159aeaa7503e480a2f5a969
+  checksum: 10c0/458545005afc33f7113e9ddc88cefcf85fb2759034fe660d7e734df9c1b904dba5af487b6fda7d400bd508d3506bb237b502655bab2e3802b3befb6c033a46bd
   languageName: node
   linkType: hard
 
@@ -1387,11 +1387,11 @@ __metadata:
     "@babel/preset-env": "npm:^7.16.11"
     "@babel/preset-typescript": "npm:^7.21.4"
     "@cozka/rollup-create-dist-packagejson": "npm:^0.7.0"
-    "@cozka/utils-array": "npm:^0.1.0"
+    "@cozka/utils-array": "npm:^0.1.1"
     "@cozka/utils-dev": "npm:^0.1.0"
     "@cozka/utils-lang": "npm:^0.1.0"
     "@cozka/utils-niche-types": "npm:^0.2.2"
-    "@cozka/utils-string": "npm:^0.1.0"
+    "@cozka/utils-string": "npm:^0.1.1"
     "@eslint/js": "npm:^9.3.0"
     "@rollup/plugin-babel": "npm:^5.3.1"
     "@rollup/plugin-commonjs": "npm:^24.0.1"
@@ -1428,13 +1428,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cozka/utils-string@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@cozka/utils-string@npm:0.1.0"
+"@cozka/utils-string@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@cozka/utils-string@npm:0.1.1"
   dependencies:
-    "@cozka/utils-array": "npm:^0.1.0"
+    "@cozka/utils-array": "npm:^0.1.1"
     lodash-es: "npm:^4.17.21"
-  checksum: 10c0/07b5bcc88203c3749c9f1daa8bc8c59603c89032b236c8bc803ffe26deb104d5e0adc1a62f0b034a1e7c53404ff96d77b9c430008ed18561d4b15f1d86ad9f3e
+  checksum: 10c0/13c0817411df720b86caa2b0e7f6de05fdbb09d50bd3920e1b75194b8dc368e76c9d0028e5fc2907faf642cf75fbc0deb173d92126164242dab04c0e6b04c241
   languageName: node
   linkType: hard
 

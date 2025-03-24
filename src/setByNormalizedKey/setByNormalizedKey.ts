@@ -1,5 +1,5 @@
-import standardize from '@cozka/utils-string/standardize';
-import { PutOptions } from './types';
+import normalize from '@cozka/utils-string/normalize';
+import { SetByNormalizedKeyOptions } from './types';
 
 /**
  * オブジェクトのキーの大文字・小文字などの違いを無視して値を設定する
@@ -8,16 +8,16 @@ import { PutOptions } from './types';
  * @param value 設定する値
  * @param options オプション
  */
-export default function assignByNormalizedKey(
+export default function setByNormalizedKey(
   object: Record<string, unknown>,
   key: string,
   value: unknown,
-  options?: PutOptions,
+  options?: SetByNormalizedKeyOptions,
 ): Record<string, unknown> {
   if (object) {
-    const targetKey = standardize(key, options);
+    const targetKey = normalize(key, options);
     for (const objKey of Object.keys(object)) {
-      if (standardize(objKey, options) === targetKey) {
+      if (normalize(objKey, options) === targetKey) {
         object[objKey] = value;
         return object;
       }

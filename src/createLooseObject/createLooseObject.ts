@@ -1,38 +1,37 @@
-import standardize from '@cozka/utils-string/standardize';
+import normalize from '@cozka/utils-string/normalize';
 import isString from 'lodash-es/isString';
 import stubTrue from 'lodash-es/stubTrue';
 import hasOwnProperty from '../hasOwnProperty';
 import { GenericRecord } from '../types';
-import { CreateInsensitiveObjectOptions as CreateInsensitiveRecordOptions } from './types';
+import { CreateLooseObjectOptions } from './types';
 
 type InsensitiveRecord<T extends GenericRecord> = T & Record<string, unknown>;
 
 /**
- * プロパティの大文字・小文字などを無視したアクセスが可能なオブジェクトを作成する
- * @param target
+ * キーの大文字・小文字を意識しないオブジェクトを作成する
  * @param options
  * @returns
  */
-export default function createInsensitiveObject<T extends GenericRecord>(
-  options: CreateInsensitiveRecordOptions<T> = {},
+export default function createLooseObject<T extends GenericRecord>(
+  options: CreateLooseObjectOptions<T> = {},
 ): InsensitiveRecord<T> {
-  const { target = {} as T, ownProperty, ...standardizeOptions } = options;
+  const { target = {} as T, ownProperty, ...normalizeOptions } = options;
   const isTargetProperty = ownProperty
     ? (target: T, key: PropertyKey) => hasOwnProperty(target, key)
     : stubTrue;
-  const standardizedObject = {} as GenericRecord;
+  const normalizedObject = {} as GenericRecord;
 
   // オリジナルのキーと標準化されたキーのマッピング
   const keyMap: Record<string, string> = {};
   for (const key in target) {
     if (isTargetProperty(target, key)) {
       if (isString(key)) {
-        const standardizedKey = standardize(key, standardizeOptions);
+        const standardizedKey = normalize(key, normalizeOptions);
         keyMap[key] = standardizedKey;
         keyMap[standardizedKey] = standardizedKey;
-        standardizedObject[standardizedKey] = target[key];
+        normalizedObject[standardizedKey] = target[key];
       } else {
-        standardizedObject[key] = target[key];
+        normalizedObject[key] = target[key];
       }
     }
   }
@@ -44,19 +43,19 @@ export default function createInsensitiveObject<T extends GenericRecord>(
       if (key in keyMap) {
         return keyMap[key];
       } else {
-        return standardize(key, standardizeOptions);
+        return normalize(key, normalizeOptions);
       }
     }
     return key;
   };
 
-  return new Proxy(standardizedObject as InsensitiveRecord<T>, {
+  return new Proxy(normalizedObject as InsensitiveRecord<T>, {
     // プロパティの設定時
     set(target, key, value, receiver) {
       if (isString(key)) {
         if (key in keyMap === false) {
           // キーを標準化して保持する
-          keyMap[key] = standardize(key, standardizeOptions);
+          keyMap[key] = normalize(key, normalizeOptions);
         }
         key = getKey(target, key);
       }
