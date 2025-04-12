@@ -1,15 +1,15 @@
 import cloneDeep from 'lodash-es/cloneDeep';
-import { DistributeConfig, DistributeOptions } from './types';
+import { DistributeOptions, DistributeRules } from './types';
 
 /**
- * object直下のプロパティをconfigに従って分類する
+ * object直下のプロパティをrulesに従って分類する
  * @param object
- * @param config
+ * @param rules
  * @param options
  */
-export default function distribute<C extends DistributeConfig>(
+export default function distribute<R extends DistributeRules>(
   object: Record<PropertyKey, unknown>,
-  config: C,
+  rules: R,
   options: DistributeOptions = {},
 ) {
   const { ownProperty, cloneValue } = options;
@@ -25,9 +25,9 @@ export default function distribute<C extends DistributeConfig>(
   const rest = { ...object };
   const restGroupKeys: string[] = [];
 
-  for (const groupKey in config) {
+  for (const groupKey in rules) {
     const group = (result[groupKey] = {} as any);
-    const properties = config[groupKey];
+    const properties = rules[groupKey];
     if (properties == null) {
       // 分類できなかったプロパティを設定するグループ
       restGroupKeys.push(groupKey);
@@ -57,6 +57,6 @@ export default function distribute<C extends DistributeConfig>(
   }
 
   return result as {
-    [groupKey in keyof C]: { [property: PropertyKey]: unknown };
+    [groupKey in keyof R]: { [property: PropertyKey]: unknown };
   };
 }

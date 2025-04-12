@@ -5,7 +5,7 @@
  *
  * @param group 分類先のグループ
  */
-export type DistributeConfig = Record<string, GroupProperties | null>;
+export type DistributeRules = Record<string, GroupProperties | null>;
 
 export type GroupProperties = {
   /**

@@ -1,11 +1,14 @@
+export { default as assignIf } from './assignIf';
 export { default as createLooseObject } from './createLooseObject';
+export { default as defaultIf } from './defaultIf';
 export { default as distribute } from './distribute';
 export { default as flatten } from './flatten';
+export { default as forEachValues } from './forEachValues';
 export { default as format } from './format';
 export { default as group } from './group';
 export { default as hasOwnProperty } from './hasOwnProperty';
 export { default as overrideInstance } from './overrideInstance';
 export { default as parse } from './parse';
-export { default as put } from './setByNormalizedKey';
+export { default as setByNormalizedKey } from './setByNormalizedKey';
 export type * from './types';
 export { default as update } from './update';

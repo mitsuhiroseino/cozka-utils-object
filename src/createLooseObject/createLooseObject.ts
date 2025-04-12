@@ -17,31 +17,16 @@ export default function createLooseObject<T extends GenericRecord>(
 ): InsensitiveRecord<T> {
   const { target = {} as T, ownProperty, ...normalizeOptions } = options;
   const isTargetProperty = ownProperty
-    ? (target: T, key: PropertyKey) => hasOwnProperty(target, key)
+    ? (obj: T, key: PropertyKey) => hasOwnProperty(obj, key)
     : stubTrue;
-  const normalizedObject = {} as GenericRecord;
-
   // オリジナルのキーと標準化されたキーのマッピング
-  const keyMap: Record<string, string> = {};
-  for (const key in target) {
-    if (isTargetProperty(target, key)) {
-      if (isString(key)) {
-        const standardizedKey = normalize(key, normalizeOptions);
-        keyMap[key] = standardizedKey;
-        keyMap[standardizedKey] = standardizedKey;
-        normalizedObject[standardizedKey] = target[key];
-      } else {
-        normalizedObject[key] = target[key];
-      }
-    }
-  }
-
+  const keyMap = new Map<string, string>();
   // 標準化されたキーの取得
   const getKey = <K extends PropertyKey>(target: T, key: K) => {
     if (key in target === false && isString(key)) {
       // キーを標準化
-      if (key in keyMap) {
-        return keyMap[key];
+      if (keyMap.has(key)) {
+        return keyMap.get(key);
       } else {
         return normalize(key, normalizeOptions);
       }
@@ -49,13 +34,13 @@ export default function createLooseObject<T extends GenericRecord>(
     return key;
   };
 
-  return new Proxy(normalizedObject as InsensitiveRecord<T>, {
+  const object = new Proxy({} as InsensitiveRecord<T>, {
     // プロパティの設定時
     set(target, key, value, receiver) {
       if (isString(key)) {
-        if (key in keyMap === false) {
+        if (!keyMap.has(key)) {
           // キーを標準化して保持する
-          keyMap[key] = normalize(key, normalizeOptions);
+          keyMap.set(key, normalize(key, normalizeOptions));
         }
         key = getKey(target, key);
       }
@@ -74,14 +59,14 @@ export default function createLooseObject<T extends GenericRecord>(
       if (isString(key)) {
         const rawKey = key;
         key = getKey(target, rawKey);
-        if (rawKey in keyMap) {
+        if (keyMap.has(rawKey)) {
           // マップからキーを削除
-          delete keyMap[rawKey];
-          delete keyMap[key];
-          for (const orgKey in keyMap) {
-            if (keyMap[orgKey] === key) {
+          keyMap.delete(rawKey);
+          keyMap.delete(key);
+          for (const entry of keyMap.entries()) {
+            if (entry[1] === key) {
               // 標準化されたキーが同じものは削除
-              delete keyMap[orgKey];
+              keyMap.delete(entry[0]);
             }
           }
         }
@@ -101,4 +86,12 @@ export default function createLooseObject<T extends GenericRecord>(
       return Reflect.defineProperty(target, getKey(target, key), attributes);
     },
   });
+
+  for (const key in target) {
+    if (isTargetProperty(target, key)) {
+      object[key] = target[key];
+    }
+  }
+
+  return object as InsensitiveRecord<T>;
 }
