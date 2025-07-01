@@ -1,6 +1,6 @@
 {
   "name": "@cozka/utils-object",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "keywords": [
     "object"
   ],
@@ -55,7 +55,7 @@
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-packagejson": "^2.5.10",
     "rimraf": "^3.0.2",
-    "rollup": "^4.39.0",
+    "rollup": "^4.40.1",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-sass": "^1.15.2",
     "ts-jest": "^29.3.0",

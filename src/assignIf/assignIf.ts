@@ -1,7 +1,14 @@
 import forEachValues from '../forEachValues';
 import { AssignIfOptions } from './types';
 
-export default function assignIf<T extends {}, V extends {}>(
+/**
+ * valuesにあるundefinedでない値のみtargetへ適用する
+ * @param target
+ * @param values
+ * @param options
+ * @returns
+ */
+export default function assignIf<T extends object = {}, V extends object = {}>(
   target: T,
   values: V,
   options: AssignIfOptions = {},
